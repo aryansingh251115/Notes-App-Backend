@@ -35,6 +35,9 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <sonar.organization>aryansingh251115</sonar.organization>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -94,7 +97,6 @@
 </project>
 
 
-
-<!--token for sonarQube-->
-<!--mvn clean install sonar:sonar -Dsonar.login=squ_565b74cba7da6c8075f633773163175bb87f0613-->
+        <!--token for sonarQube-->
+        <!--mvn clean install sonar:sonar -Dsonar.login=squ_565b74cba7da6c8075f633773163175bb87f0613-->
 
