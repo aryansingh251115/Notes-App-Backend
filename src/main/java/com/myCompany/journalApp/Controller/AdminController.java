@@ -1,10 +1,13 @@
 package com.myCompany.journalApp.Controller;
 
+import com.myCompany.journalApp.cache.AppCache;
 import com.myCompany.journalApp.entity.User;
 import com.myCompany.journalApp.service.UserService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +20,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AppCache appCache;
 
 
     @GetMapping("/all-users")
@@ -34,4 +40,9 @@ public class AdminController {
     }
 
 
+
+    @GetMapping("/clear-app-cache")
+    public void clearAppCache(){
+        appCache.init();
+    }
 }

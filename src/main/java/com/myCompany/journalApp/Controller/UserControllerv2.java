@@ -1,22 +1,16 @@
 package com.myCompany.journalApp.Controller;
 
-import com.myCompany.journalApp.entity.JournalEntry;
 import com.myCompany.journalApp.entity.User;
 import com.myCompany.journalApp.repository.UserRepository;
-import com.myCompany.journalApp.service.JournalEntryService;
 import com.myCompany.journalApp.service.UserService;
-import org.apache.coyote.Response;
-import org.bson.types.ObjectId;
+import com.myCompany.journalApp.service.WeatherService;
+import com.myCompany.journalApp.service.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -26,6 +20,9 @@ public class UserControllerv2 {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WeatherService weatherService;
 
 
     @PutMapping()
@@ -46,5 +43,21 @@ public class UserControllerv2 {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUserName(authentication.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<?> greetings() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResp = weatherService.getWeather("Kanpur");
+        String greet = "";
+        if(weatherResp != null){
+            greet = " , Weather Details => " +
+                    "Temperature: " + weatherResp.getCurrent().getTemperature() + "°C, " +
+                    "Feels Like: " + weatherResp.getCurrent().getFeelslike() + "°C, " +
+                    "Humidity: " + weatherResp.getCurrent().getHumidity() + "%, " +
+                    "Visibility: " + weatherResp.getCurrent().getVisibility() + " km";
+        }
+        return new ResponseEntity<>( "Hi " + authentication.getName()+ greet, HttpStatus.OK);
     }
 }
