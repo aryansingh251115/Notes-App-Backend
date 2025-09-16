@@ -103,7 +103,6 @@ public class UserScheduler {
 
         } catch (Exception e) {
             System.err.println("Error in fetchAndSendSAMail:");
-            e.printStackTrace();
         }
     }
 
