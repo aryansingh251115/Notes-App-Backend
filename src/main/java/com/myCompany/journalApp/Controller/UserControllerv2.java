@@ -5,6 +5,7 @@ import com.myCompany.journalApp.repository.UserRepository;
 import com.myCompany.journalApp.service.UserService;
 import com.myCompany.journalApp.service.WeatherService;
 import com.myCompany.journalApp.service.WeatherResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User ControllerAPIs" , description = "These all are the User Controller APIs.")
 public class UserControllerv2 {
     @Autowired
     private UserService userService;

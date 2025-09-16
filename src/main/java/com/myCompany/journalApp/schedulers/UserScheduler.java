@@ -7,12 +7,12 @@ import com.myCompany.journalApp.enums.Sentiment;
 import com.myCompany.journalApp.model.SentimentData;
 import com.myCompany.journalApp.repository.UserRepositoryImpl;
 import com.myCompany.journalApp.service.EmailService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequestMapping("/temp")
+@Tag(name = "Send Mail of Sentimental Analysis.")
 public class UserScheduler {
 
     @Autowired
@@ -58,7 +59,7 @@ public class UserScheduler {
 
             for (User user : users) {
                 List<JournalEntry> journalEntries = user.getJournalEntries();
-                if (journalEntries == null) {
+                if (journalEntries == null || journalEntries.isEmpty()) {
                     System.out.println("No journal entries for user: " + user.getEmail());
                     continue;
                 }
@@ -93,14 +94,9 @@ public class UserScheduler {
                             .build();
 
                     try {
-                        kafkaTemplate.send("weekly-sentiment", sentimentData.getEmail(), sentimentData)
-                                .addCallback(
-                                        success -> System.out.println("Message sent: " + sentimentData.getEmail()),
-                                        failure -> System.out.println("Message failed: " + failure.getMessage())
-                                );
+                        kafkaTemplate.send("weekly-sentiment", sentimentData.getEmail(), sentimentData);
                     } catch (Exception e) {
-                        System.err.println("Kafka send failed for user: " + user.getEmail());
-                        e.printStackTrace();
+                        emailService.sendEmail(sentimentData.getEmail(),"Sentiment for the previous week" , sentimentData.getSentiment());
                     }
                 }
             }
