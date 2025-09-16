@@ -1,0 +1,62 @@
+This is old application file with all comments
+
+
+spring.application.name=JournalApp
+# MongoDB Atlas connection
+spring.data.mongodb.uri=${MONGO_DB_URI}
+spring.data.mongodb.database=journaldb
+spring.data.mongodb.auto-index-creation=true
+logging.level.com.myCompany.journalApp.service=TRACE
+weather.api.key=${WEATHER_KEY}
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=${MAIL_USER}
+spring.mail.password=${MAIL_PASS}
+
+
+
+#For Redis
+spring.redis.url=${REDIS_URL}
+#spring.redis.host=redis-14875.c264.ap-south-1-1.ec2.redns.redis-cloud.com
+#spring.redis.port=14875
+#spring.redis.username=default
+#spring.redis.password=8HfZTeRDc9Nwbmspw09Jy7voQfWsyjV0
+
+
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+#logging:
+#  level:
+#    net:
+#      myCompany:
+#        journalApp: WARN
+# For local MongoDB (use only if you want local DB, otherwise keep commented)
+# spring.data.mongodb.host=localhost
+# spring.data.mongodb.port=27017
+# spring.data.mongodb.database=journaldb
+
+
+
+# Kafka Bootstrap Server (Local)
+spring.kafka.bootstrap-servers=localhost:9092
+
+# Producer Config
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
+
+# Consumer Config
+spring.kafka.consumer.group-id=weekly-sentiment-group
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.springframework.kafka.support.serializer.JsonDeserializer
+
+# Trusted packages for deserialization
+spring.kafka.consumer.properties.spring.json.trusted.packages=*
+
+# Session Timeout (Optional)
+spring.kafka.consumer.session.timeout.ms=450000
+
+spring.security.oauth2.client.registration.google.client-id=545313941606-hueb975q6fr2b11d9jd48n1mcc79ppgk.apps.googleusercontent.com
+spring.security.oauth2.client.registration.google.client-secret=${GOOGLE_SECRET}
+
+
+

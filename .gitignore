@@ -14,7 +14,10 @@ target/
 .sts4-cache
 *.yml
 *.log
-*.properties
+application[dot]propertiesFile.text
+
+
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
